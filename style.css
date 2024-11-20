@@ -133,3 +133,98 @@ canvas {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Sidebar styles */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  color: #fff;
+  overflow-x: hidden;
+  transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+#sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+.w-20 {
+  width: 5rem;
+}
+
+.w-64 {
+  width: 16rem;
+}
+
+/* Main Content styles */
+#main-content {
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar-open #main-content {
+  margin-left: 16rem; /* Matches the expanded sidebar width */
+}
+
+/* Navbar styles */
+.navBar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.navBar.ml-20 {
+  margin-left: 5rem;
+}
+
+/* Other styles */
+.hidden {
+  display: none !important;
+}
+
+.opacity-0 {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.opacity-1 {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hidden {
+  display: none !important;
+  height: 0 !important; /* Ensure zero height for collapsed state */
+  overflow: hidden; /* Prevent content overflow */
+}
+
+.sidebar.w-20 .dropdown {
+  display: none !important;
+}
+.sidebar .dropdown {
+  display: none;
+}
+
+/* Show the dropdown when it's active */
+.sidebar .dropdown.active {
+  display: block;
+}
+
+@keyframes expandSidebar {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 16rem; /* Match expanded width */
+    opacity: 1;
+  }
+}
+
+.expand-animation {
+  animation: expandSidebar 0.3s ease-in-out forwards;
+}
