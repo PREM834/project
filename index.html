@@ -4,1050 +4,984 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XYZ Company</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="src/style.css" />
   </head>
 
   <body class="bg-gray-100 font-sans">
-    <!-- Sidebar (Initially collapsed) -->
-
     <div
-      id="sidebar"
-      class="sidebar fixed left-0 top-0 h-full w-30 bg-blue-600 py-4 pl-4 transition-all duration-500 ease-in-out z-10 overflow-y-auto"
+      id="loginCard"
+      class="flex items-center justify-center min-h-screen bg-gradient-to-r from-sky-200 to-blue-500 "
     >
-      <!-- Close Button -->
-      <button
-        id="closeBtn"
-        class="p-2 text-white rounded-md hidden hover:text-gray-400"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M19 12H5m7 7l-7-7 7-7" />
-        </svg>
-      </button>
+      <!-- Main Card -->
+      <div class="bg-white rounded-xl shadow-lg w-96 p-8 relative">
+        <!-- Decorative Logo or Icon -->
+        <div class="absolute -top-12 left-1/2 transform -translate-x-1/2">
+          <img
+            src="src/login/image/magic-carpet.png"
+            alt="Carpet Icon"
+            class="h-24 w-24 rounded-full"
+          />
+        </div>
 
-      <div class="logo-details flex items-center justify-between relative h-16">
+        <!-- Heading -->
+        <div class="text-center mb-6">
+          <h1 class="text-2xl font-bold text-gray-700">Welcome 😊</h1>
+          <h2 class="text-3xl font-bold text-sky-600">Login To Your Account</h2>
+        </div>
+
+        <!-- Form -->
+        <form action="/login" method="POST" class="mt-16">
+          <!-- Email -->
+          <label
+            for="email"
+            class="block text-left text-gray-600 font-medium mb-2"
+            >Email Address:</label
+          >
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-sky-500 focus:ring focus:ring-sky-200"
+            required
+          />
+
+          <!-- Password -->
+          <label
+            for="password"
+            class="block text-left text-gray-600 font-medium mt-4 mb-2"
+            >Password:</label
+          >
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-sky-500 focus:ring focus:ring-sky-200"
+              autocomplete="current-password"
+              required
+            />
+            <i class="fa fa-eye-slash show-hide-icon" id="showHidePassword"></i>
+          </div>
+
+          <!-- Login Button -->
+          <button
+          id="login"
+            class="bg-sky-600 text-white font-bold py-3 px-6 rounded-md w-full mt-6 transition-all duration-300 hover:bg-sky-700 focus:ring focus:ring-sky-300"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Content Area (Initially hidden) -->
+    <div id="content" class="hidden">
+      <div
+        id="sidebar"
+        class="sidebar fixed left-0 top-0 h-full w-30 bg-blue-600 rounded-lg py-4 pl-4 transition-all duration-500 ease-in-out z-10 overflow-y-auto"
+      >
+        <!-- Close Button -->
+        <button
+          id="closeBtn"
+          class="p-2 text-white rounded-md hidden hover:text-gray-400"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 12H5m7 7l-7-7 7-7" />
+          </svg>
+        </button>
+
         <!-- logo -->
         <div
-          id="logo"
-          class="logo_name text-white text-xl font-semibold transition-opacity duration-500 ease-in-out opacity-0"
+          class="logo-details flex items-center justify-between relative h-16"
         >
-          XYZ Company
+          <div
+            id="logo"
+            class="logo_name text-white text-xl font-semibold transition-opacity duration-500 ease-in-out opacity-0"
+          >
+            XYZ Company
+          </div>
         </div>
-      </div>
 
-      <ul class="nav-list mt-3">
-        <!-- Dashboard -->
-        <li class="relative group">
-          <a
-            href="#"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <i
-                class="bx bx-grid-alt text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <span
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-                >Dashboard</span
-              >
-            </div>
-          </a>
-        </li>
-
-        <!-- Master -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownMaster', 'dropdownUser','dropdownAccountCreation','dropdownRawMaterialSetup','dropdownProducts','dropdownStock','dropdownPurchase','dropdownRawMaterialPurchase','dropdownSupplierRegister','dropdownStockOpening','dropdownBuyerOrder','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownReport','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <i
-                class="bx bx-user text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <span
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-                >Master</span
-              >
-            </div>
-          </a>
-
-          <!-- Master Dropdown -->
-          <ul id="dropdownMaster" class="hidden pl-4 mt-2 space-y-2">
-            <!-- Manage User Dropdown -->
-            <li class="m-0">
-              <button
-                onclick="toggleDropdown('dropdownUser', 'dropdownAccountCreation', 'dropdownRawMaterialSetup')"
-                class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-              >
-                Manage User
-                <span class="justify-between">&#9662;</span>
-              </button>
-              <ul id="dropdownUser" class="hidden pl-4 mt-2 space-y-2">
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  User
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  User Authentication
-                </li>
-              </ul>
-            </li>
-
-            <!-- Account Creation Dropdown -->
-            <li>
-              <button
-                onclick="toggleDropdown('dropdownAccountCreation', 'dropdownUser', 'dropdownRawMaterialSetup')"
-                class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-              >
-                Account Creation
-                <span>&#9662;</span>
-              </button>
-              <ul
-                id="dropdownAccountCreation"
-                class="hidden pl-4 mt-2 space-y-2"
-              >
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Buyer
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Buyer Agent
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Shipping Company
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Transporter
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Raw Material Supplier
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Designer
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Dyer
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Other Account
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Spinner
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Finisher Account
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Contractor Account
-                </li>
-              </ul>
-            </li>
-
-            <!-- Raw Material Setup -->
-            <li>
-              <button
-                onclick="toggleDropdown('dropdownRawMaterialSetup', 'dropdownUser', 'dropdownAccountCreation')"
-                class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-              >
-                Raw Material Setup
-                <span>&#9662;</span>
-              </button>
-              <ul
-                id="dropdownRawMaterialSetup"
-                class="hidden pl-4 mt-2 space-y-2"
-              >
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Material Quality
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Material Name
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-
-        <!-- Stock Inventory -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownStock','dropdownMaster','dropdownProducts','dropdownPurchase','dropdownBuyerOrder','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownReport','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Changed to 'bx bx-package' for a more appropriate stock icon -->
-              <i
-                class="bx bx-store-alt text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <!-- Changed icon to 'bx-store-alt' -->
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Stock Inventory
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownStock" class="hidden pl-4 mt-2 space-y-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Ready Stock (Rung Khana)
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Dyed Material
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Undyed Material (Godown)
-            </li>
-          </ul>
-        </li>
-
-        <!-- Buyer Order (Not Done) -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownBuyerOrder','dropdownMaster','dropdownProducts','dropdownStock','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownReport','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Icon with white color and hover color effect -->
-              <i
-                class="bx bx-shopping-bag text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <!-- Icon changes on hover -->
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Buyer Order
-              </p>
-              <!-- Text color changes on hover -->
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownBuyerOrder" class="hidden pl-4 mt-2 space-y-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Content for Buyer Order
-            </li>
-          </ul>
-        </li>
-
-        <!-- Purchase -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownPurchase','dropdownMaster','dropdownProducts','dropdownStock','dropdownRawMaterialPurchase','dropdownSupplierRegister','dropdownStockOpening','dropdownBuyerOrder','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownReport','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Updated icon for purchase -->
-              <i
-                class="bx bx-cart text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <!-- Changed to bx-cart for a better purchase-related icon -->
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Purchase
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownPurchase" class="hidden pl-4 mt-2 space-y-2">
-            <!-- Raw Material Purchase -->
-            <li>
-              <button
-                onclick="toggleDropdown('dropdownRawMaterialPurchase','dropdownSupplierRegister','dropdownStockOpening')"
-                class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-              >
-                Raw Material Purchase
-                <span>&#9662;</span>
-              </button>
-              <ul
-                id="dropdownRawMaterialPurchase"
-                class="hidden pl-4 space-y-2 mt-2"
-              >
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Purchase Order
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Purchase Receipt
-                </li>
-              </ul>
-            </li>
-
-            <!-- Supplier Register -->
-            <li>
-              <button
-                onclick="toggleDropdown('dropdownSupplierRegister','dropdownRawMaterialPurchase','dropdownStockOpening')"
-                class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-              >
-                Supplier Register
-                <span>&#9662;</span>
-              </button>
-              <ul
-                id="dropdownSupplierRegister"
-                class="hidden pl-4 space-y-2 mt-2"
-              >
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Purchase Order Register
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Receive Register
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Balance Register
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Supplier Material Ledger
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Purchase Stock Ledger
-                </li>
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Extra Material Ledger
-                </li>
-              </ul>
-            </li>
-
-            <!-- Stock Opening -->
-            <li>
-              <button
-                onclick="toggleDropdown('dropdownStockOpening','dropdownRawMaterialPurchase','dropdownSupplierRegister')"
-                class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-              >
-                Stock Opening
-                <span>&#9662;</span>
-              </button>
-              <ul id="dropdownStockOpening" class="hidden pl-4 space-y-2 mt-2">
-                <li
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
-                >
-                  Stock Opening Report
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-
-        <!-- Spinning -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownSpinning','dropdownMaster','dropdownProducts','dropdownStock','dropdownPurchase','dropdownBuyerOrder','dropdownDyeing','dropdownArtwork','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownReport','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Updated icon for Spinning Process -->
-              <i
-                class="bx bx-refresh text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <!-- Spinning process icon using bx-refresh -->
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Spinning Process
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownSpinning" class="hidden pl-4 mt-2 space-y-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Content for Spinning Process
-            </li>
-          </ul>
-        </li>
-
-        <!-- Dyeing -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownDyeing','dropdownDyeingRegister','dropdownMaster','dropdownProducts','dropdownStock','dropdownPurchase','dropdownBuyerOrder','dropdownSpinning','dropdownArtwork','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownReport','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Updated icon for Dyeing -->
-              <i
-                class="bx bx-paint text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <!-- Dyeing icon using bx-paint -->
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Dyeing
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownDyeing" class="hidden pl-4 mt-2 space-y-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Dyeing Programme List
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Add Dyeing Programme
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Dyeing Issue
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Dyeing Receive
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Dyeing Return
-            </li>
-
-            <!-- Dyeing Register -->
-            <button
-              onclick="toggleDropdown('dropdownDyeingRegister')"
-              class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+        <ul class="nav-list mt-3">
+          <!-- Dashboard -->
+          <li class="relative group">
+            <a
+              href="dashboard"
+              id="Dashboard"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
             >
-              Dyeing Register
-              <span>&#9662;</span>
-            </button>
+              <div class="flex items-center">
+                <i
+                  class="bx bx-grid-alt text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <span
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                  >Dashboard</span
+                >
+              </div>
+            </a>
+          </li>
 
-            <ul id="dropdownDyeingRegister" class="hidden pl-4 space-y-2 mt-2">
+          <!-- Master -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownMaster"
+              data-siblings="dropdownStock,dropdownProducts,dropdownPurchase,dropdownBuyerOrder,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownReport,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-user text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Master
+                </p>
+              </div>
+            </a>
+
+            <!-- Dropdown Content for Master -->
+            <ul id="dropdownMaster" class="hidden pl-4 mt-2 space-y-2">
+              <!-- Manage User -->
+              <li>
+                <button
+                  data-toggle="dropdown"
+                  data-target="dropdownUser"
+                  data-siblings="dropdownAccountCreation,dropdownRawMaterialSetup"
+                  class="w-full text-left text-white hover:text-yellow-300 cursor-pointer flex items-center justify-between"
+                >
+                  Manage User
+                  <span class="ml-auto">&#9662;</span>
+                  <!-- Down arrow for nested dropdown -->
+                </button>
+                <ul id="dropdownUser" class="hidden pl-4 space-y-2 mt-2">
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    User
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    User Authentication
+                  </li>
+                </ul>
+              </li>
+
+              <!-- Account Creation -->
+              <li>
+                <button
+                  data-toggle="dropdown"
+                  data-target="dropdownAccountCreation"
+                  data-siblings="dropdownUser,dropdownRawMaterialSetup"
+                  class="w-full text-left text-white hover:text-yellow-300 cursor-pointer flex items-center justify-between"
+                >
+                  Account Creation
+                  <span class="ml-auto">&#9662;</span>
+                  <!-- Down arrow for nested dropdown -->
+                </button>
+                <ul
+                  id="dropdownAccountCreation"
+                  class="hidden pl-4 space-y-2 mt-2"
+                >
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Buyer
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Buyer Agent
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Shipping Company
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Transporter
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Raw Material Supplier
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Designer
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Dyer
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Other Account
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Spinner
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Finisher Account
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Contractor Account
+                  </li>
+                </ul>
+              </li>
+
+              <!-- Raw Material Setup -->
+              <li>
+                <button
+                  data-toggle="dropdown"
+                  data-target="dropdownRawMaterialSetup"
+                  data-siblings="dropdownUser,dropdownAccountCreation"
+                  class="w-full text-left text-white hover:text-yellow-300 cursor-pointer flex items-center justify-between"
+                >
+                  Raw Material Setup
+                  <span class="ml-auto">&#9662;</span>
+                  <!-- Down arrow for nested dropdown -->
+                </button>
+                <ul
+                  id="dropdownRawMaterialSetup"
+                  class="hidden pl-4 space-y-2 mt-2"
+                >
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Material Quality
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Material Name
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <!-- Stock Inventory -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownStock"
+              data-siblings="dropdownMaster,dropdownProducts,dropdownPurchase,dropdownBuyerOrder,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownReport,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-store-alt text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <span
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Stock Inventory
+                </span>
+              </div>
+            </a>
+
+            <!-- Dropdown Content -->
+            <ul id="dropdownStock" class="hidden pl-4 mt-2 space-y-2">
+              <li class="text-white hover:text-yellow-300 cursor-pointer">
+                Ready Stock (Rung Khana)
+              </li>
+              <li class="text-white hover:text-yellow-300 cursor-pointer">
+                Dyed Material
+              </li>
+              <li class="text-white hover:text-yellow-300 cursor-pointer">
+                Undyed Material (Godown)
+              </li>
+            </ul>
+          </li>
+
+          <!-- Buyer Order -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownBuyerOrder"
+              data-siblings="dropdownMaster,dropdownProducts,dropdownStock,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownReport,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-shopping-bag text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <span
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Buyer Order
+                </span>
+              </div>
+            </a>
+
+            <!-- Dropdown Content -->
+            <ul id="dropdownBuyerOrder" class="hidden pl-4 mt-2 space-y-2">
+              <li class="text-white hover:text-yellow-300 cursor-pointer">
+                Content for Buyer Order
+              </li>
+            </ul>
+          </li>
+
+          <!-- Purchase -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownPurchase"
+              data-siblings="dropdownMaster,dropdownProducts,dropdownStock,dropdownBuyerOrder,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownReport,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-cart text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Purchase
+                </p>
+              </div>
+            </a>
+
+            <!-- Dropdown Content for Purchase -->
+            <ul id="dropdownPurchase" class="hidden pl-4 mt-2 space-y-2">
+              <!-- Raw Material Purchase -->
+              <li>
+                <button
+                  data-toggle="dropdown"
+                  data-target="dropdownRawMaterialPurchase"
+                  data-siblings="dropdownSupplierRegister,dropdownStockOpening"
+                  class="w-full text-left text-white hover:text-yellow-300 cursor-pointer flex items-center justify-between"
+                >
+                  Raw Material Purchase
+                  <span class="ml-auto">&#9662;</span>
+                  <!-- Down arrow for nested dropdown -->
+                </button>
+                <ul
+                  id="dropdownRawMaterialPurchase"
+                  class="hidden pl-4 space-y-2 mt-2"
+                >
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Purchase Order
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Purchase Receipt
+                  </li>
+                </ul>
+              </li>
+
+              <!-- Supplier Register -->
+              <li>
+                <button
+                  data-toggle="dropdown"
+                  data-target="dropdownSupplierRegister"
+                  data-siblings="dropdownRawMaterialPurchase,dropdownStockOpening"
+                  class="w-full text-left text-white hover:text-yellow-300 cursor-pointer flex items-center justify-between"
+                >
+                  Supplier Register
+                  <span class="ml-auto">&#9662;</span>
+                  <!-- Down arrow for nested dropdown -->
+                </button>
+                <ul
+                  id="dropdownSupplierRegister"
+                  class="hidden pl-4 space-y-2 mt-2"
+                >
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Purchase Order Register
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Receive Register
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Balance Register
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Supplier Material Ledger
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Purchase Stock Ledger
+                  </li>
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Extra Material Ledger
+                  </li>
+                </ul>
+              </li>
+
+              <!-- Stock Opening -->
+              <li>
+                <button
+                  data-toggle="dropdown"
+                  data-target="dropdownStockOpening"
+                  data-siblings="dropdownRawMaterialPurchase,dropdownSupplierRegister"
+                  class="w-full text-left text-white hover:text-yellow-300 cursor-pointer flex items-center justify-between"
+                >
+                  Stock Opening
+                  <span class="ml-auto">&#9662;</span>
+                  <!-- Down arrow for nested dropdown -->
+                </button>
+                <ul
+                  id="dropdownStockOpening"
+                  class="hidden pl-4 space-y-2 mt-2"
+                >
+                  <li class="text-white hover:text-yellow-300 cursor-pointer">
+                    Stock Opening Report
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <!-- Spinning -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownSpinning"
+              data-siblings="dropdownMaster,dropdownProducts,dropdownStock,dropdownPurchase,dropdownBuyerOrder,dropdownDyeing,dropdownArtwork,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownReport,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <!-- Updated icon for Spinning Process -->
+                <i
+                  class="bx bx-refresh text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <!-- Spinning process icon using bx-refresh -->
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Spinning Process
+                </p>
+              </div>
+            </a>
+
+            <!-- Dropdown Content -->
+            <ul id="dropdownSpinning" class="hidden pl-4 mt-2 space-y-2">
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Content for Spinning Process
+              </li>
+            </ul>
+          </li>
+
+          <!-- Dyeing -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownDyeing"
+              data-siblings="dropdownMaster,dropdownProducts,dropdownStock,dropdownPurchase,dropdownBuyerOrder,dropdownSpinning,dropdownArtwork,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownReport,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-paint text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Dyeing
+                </p>
+              </div>
+            </a>
+
+            <!-- Dropdown Content -->
+            <ul id="dropdownDyeing" class="hidden pl-4 mt-2 space-y-2">
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Dyeing Programme List
+              </li>
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Add Dyeing Programme
+              </li>
               <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
                 Dyeing Issue
               </li>
               <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Program Register
+                Dyeing Receive
               </li>
               <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Receive Register
+                Dyeing Return
               </li>
-              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Balance Register
-              </li>
-              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Dyer Material Ledger
+
+              <!-- Dyeing Register -->
+              <li>
+                <button
+                  href="#"
+                  data-toggle="dropdown"
+                  data-target="dropdownDyeingRegister"
+                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                >
+                  Dyeing Register
+                  <span class="ml-auto">&#9662;</span>
+                </button>
+                <ul
+                  id="dropdownDyeingRegister"
+                  class="hidden pl-4 space-y-2 mt-2"
+                >
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Dyeing Issue
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Program Register
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Receive Register
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Balance Register
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Dyer Material Ledger
+                  </li>
+                </ul>
               </li>
             </ul>
-          </ul>
-        </li>
+          </li>
 
-        <!-- Art Work (Not Done) -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownArtwork','dropdownDyeing','dropdownMaster','dropdownProducts','dropdownStock','dropdownPurchase','dropdownBuyerOrder','dropdownSpinning','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownReport','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Updated icon for Art Work -->
-              <i
-                class="bx bx-palette text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <!-- Palette icon for Artwork -->
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Art Work
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownArtwork" class="hidden pl-4 mt-2 space-y-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Content for Artwork
-            </li>
-          </ul>
-        </li>
-
-        <!-- Contractor Order -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownContractor','dropdownContractorOrder','dropdownMaster','dropdownProducts','dropdownStock','dropdownPurchase','dropdownBuyerOrder','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownReport','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Updated Icon for Contractor Order -->
-              <i
-                class="bx bx-archive text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <!-- Archive box icon for orders -->
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Contractor Order
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownContractor" class="hidden pl-4 space-y-2 mt-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Order Issue
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Material Issue
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Other Material Issue
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Other Receive (Bazar)
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Contractor Label Balance
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Material Return
-            </li>
-
-            <button
-              onclick="toggleDropdown('dropdownContractorOrder')"
-              class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+          <!-- Art Work -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownArtwork"
+              data-siblings="dropdownDyeing,dropdownMaster,dropdownProducts,dropdownStock,dropdownPurchase,dropdownBuyerOrder,dropdownSpinning,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownReport,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
             >
               <div class="flex items-center">
+                <i
+                  class="bx bx-palette text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
                 <p
-                  class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Art Work
+                </p>
+              </div>
+            </a>
+
+            <!-- Dropdown Content -->
+            <ul id="dropdownArtwork" class="hidden pl-4 mt-2 space-y-2">
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Content for Artwork
+              </li>
+            </ul>
+          </li>
+
+          <!-- Contractor Order -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownContractor"
+              data-siblings="dropdownContractorOrder,dropdownMaster,dropdownProducts,dropdownStock,dropdownPurchase,dropdownBuyerOrder,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownReport,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-archive text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
                 >
                   Contractor Order
                 </p>
-                <span>&#9662;</span>
               </div>
-            </button>
-            <ul id="dropdownContractorOrder" class="hidden pl-4 space-y-2 mt-2">
+            </a>
+
+            <!-- Dropdown Content for Contractor Order -->
+            <ul id="dropdownContractor" class="hidden pl-4 mt-2 space-y-2">
               <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Issue Register
+                Order Issue
               </li>
               <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Receive Register
+                Material Issue
               </li>
               <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Balance Register
+                Other Material Issue
               </li>
               <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Contractor Folio Report
+                Other Receive (Bazar)
               </li>
               <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Folio Report List
+                Contractor Label Balance
               </li>
               <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Folio Pending For Final
+                Material Return
               </li>
-              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Material Register
+
+              <!-- Contractor Order Submenu -->
+              <li>
+                <button
+                  data-toggle="dropdown"
+                  data-target="dropdownContractorOrder"
+                  class="w-full text-left p-0.5 text-white hover:text-yellow-300 cursor-pointer flex items-center justify-between"
+                >
+                  Contractor Order
+                  <span class="ml-auto">&#9662;</span>
+                  <!-- Down arrow for nested dropdown -->
+                </button>
+
+                <!-- Nested Dropdown for Contractor Order -->
+                <ul
+                  id="dropdownContractorOrder"
+                  class="hidden pl-4 space-y-2 mt-2"
+                >
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Issue Register
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Receive Register
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Balance Register
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Contractor Folio Report
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Folio Report List
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Folio Pending For Final
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Material Register
+                  </li>
+                </ul>
               </li>
             </ul>
-          </ul>
-        </li>
+          </li>
 
-        <!-- Finishing -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownFinishing','dropdownJobWorkRegister','dropdownContractor','dropdownMaster','dropdownProducts','dropdownStock','dropdownPurchase','dropdownBuyerOrder','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownPacking','dropdownUtility','dropdownReport','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Updated Icon for Finishing -->
-              <i
-                class="bx bx-check-circle text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <!-- Gear icon representing finishing process -->
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Finishing
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownFinishing" class="hidden pl-4 space-y-2 mt-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Job Issue
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Job Receive
-            </li>
-
-            <button
-              onclick="toggleDropdown('dropdownJobWorkRegister')"
-              class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+          <!-- Finishing -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownFinishing"
+              data-siblings="dropdownMaster,dropdownProducts,dropdownStock,dropdownPurchase,dropdownBuyerOrder,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownPacking,dropdownContractor,dropdownUtility,dropdownReport,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
             >
               <div class="flex items-center">
-                <p>Job Work Register</p>
-                <span>&#9662;</span>
+                <i
+                  class="bx bx-check-circle text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Finishing
+                </p>
               </div>
-            </button>
-            <ul id="dropdownJobWorkRegister" class="hidden pl-4 space-y-2 mt-2">
+            </a>
+
+            <!-- Dropdown Content for Finishing -->
+            <ul id="dropdownFinishing" class="hidden pl-4 mt-2 space-y-2">
               <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Order Wise Balance Report
+                Job Issue
               </li>
               <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                TDS Register
+                Job Receive
               </li>
-              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-                Process Pending Report
+
+              <!-- Job Work Register Dropdown -->
+              <li>
+                <button
+                  data-toggle="dropdown"
+                  data-target="dropdownJobWorkRegister"
+                  class="w-full text-left p-0.5 text-white hover:text-yellow-300 cursor-pointer flex items-center justify-between"
+                >
+                  Job Work Register
+                  <span class="ml-auto">&#9662;</span>
+                  <!-- Down arrow for nested dropdown -->
+                </button>
+
+                <!-- Nested Dropdown for Job Work Register -->
+                <ul
+                  id="dropdownJobWorkRegister"
+                  class="hidden pl-4 space-y-2 mt-2"
+                >
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Order Wise Balance Report
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    TDS Register
+                  </li>
+                  <li
+                    class="p-0.5 text-white hover:text-yellow-300 cursor-pointer"
+                  >
+                    Process Pending Report
+                  </li>
+                </ul>
               </li>
             </ul>
-          </ul>
-        </li>
+          </li>
 
-        <!-- Packing -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownPacking','dropdownUtility','dropdownReport','dropdownSystemUser','dropdownBuyerOrder','dropdownMaster','dropdownProducts','dropdownStock','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownContractor','dropdownCustomers','dropdownFinishing')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
+          <!-- Packing -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownPacking"
+              data-siblings="dropdownUtility,dropdownReport,dropdownSystemUser,dropdownBuyerOrder,dropdownMaster,dropdownProducts,dropdownStock,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownContractor,dropdownCustomers,dropdownFinishing"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-box text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Packing
+                </p>
+              </div>
+            </a>
+
+            <!-- Dropdown Content -->
+            <ul id="dropdownPacking" class="hidden pl-4 space-y-2 mt-2">
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Content for Packing
+              </li>
+            </ul>
+          </li>
+
+          <!-- Utility -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownUtility"
+              data-siblings="dropdownReport,dropdownBuyerOrder,dropdownMaster,dropdownProducts,dropdownStock,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-wrench text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Utility
+                </p>
+              </div>
+            </a>
+
+            <!-- Dropdown Content -->
+            <ul id="dropdownUtility" class="hidden pl-4 space-y-2 mt-2">
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Content for Utility
+              </li>
+            </ul>
+          </li>
+
+          <!-- Products -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownProducts"
+              data-siblings="dropdownMaster,dropdownStock,dropdownPurchase,dropdownBuyerOrder,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownReport,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-package text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Products
+                </p>
+              </div>
+            </a>
+
+            <!-- Dropdown Content -->
+            <ul id="dropdownProducts" class="hidden pl-4 mt-2 space-y-2">
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Carpet Type
+              </li>
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Quality
+              </li>
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Colour
+              </li>
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Shade Colour
+              </li>
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Shape
+              </li>
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Size
+              </li>
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Design
+              </li>
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                BOM (Bill Of Material)
+              </li>
+            </ul>
+          </li>
+
+          <!-- Report -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownReport"
+              data-siblings="dropdownBuyerOrder,dropdownMaster,dropdownProducts,dropdownStock,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownCustomers,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-line-chart text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Report
+                </p>
+              </div>
+            </a>
+
+            <!-- Dropdown Content -->
+            <ul id="dropdownReport" class="hidden pl-4 space-y-2 mt-2">
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Content for Report
+              </li>
+            </ul>
+          </li>
+
+          <!-- Customers -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownCustomers"
+              data-siblings="dropdownBuyerOrder,dropdownMaster,dropdownProducts,dropdownStock,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownReport,dropdownSystemUser"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-group text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  Customers
+                </p>
+              </div>
+            </a>
+
+            <!-- Dropdown Content -->
+            <ul id="dropdownCustomers" class="hidden pl-4 space-y-2 mt-2">
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Content for Customers
+              </li>
+            </ul>
+          </li>
+
+          <!-- System User -->
+          <li class="relative group">
+            <a
+              href="#"
+              data-toggle="dropdown"
+              data-target="dropdownSystemUser"
+              data-siblings="dropdownMaster,dropdownBuyerOrder,dropdownStock,dropdownPurchase,dropdownSpinning,dropdownDyeing,dropdownArtwork,dropdownContractor,dropdownFinishing,dropdownPacking,dropdownUtility,dropdownProducts,dropdownReport,dropdownCustomers"
+              class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-700"
+            >
+              <div class="flex items-center">
+                <i
+                  class="bx bx-user text-white text-xl mr-3 group-hover:text-gray-700"
+                ></i>
+                <p
+                  class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-700"
+                >
+                  System User
+                </p>
+              </div>
+            </a>
+
+            <!-- Dropdown Content -->
+            <ul id="dropdownSystemUser" class="hidden pl-4 space-y-2 mt-2">
+              <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
+                Content for System User
+              </li>
+            </ul>
+          </li>
+
+          <!-- Add more menu items here -->
+        </ul>
+      </div>
+
+      <!-- Navbar section -->
+      <nav class="navBar sticky rounded-md top-0 ml-20 w-full bg-blue-600 h-14">
+        <!-- Hamburger Button (Initially visible) -->
+        <button
+          id="hamburger"
+          class="p-2 text-white rounded-md top-4 left-4 hover:text-gray-400"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            <div class="flex items-center">
-              <!-- Updated Icon for Packing -->
-              <i
-                class="bx bx-box text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <!-- Box icon representing packing -->
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Packing
-              </p>
-            </div>
-          </a>
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+        <h2>login</h2>
+      </nav>
 
-          <!-- Dropdown Content -->
-          <ul id="dropdownPacking" class="hidden pl-4 space-y-2 mt-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Content for Packing
-            </li>
-          </ul>
-        </li>
+      <!-- Main content section -->
 
-        <!-- Utility -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownUtility','dropdownReport','dropdownBuyerOrder','dropdownMaster','dropdownProducts','dropdownStock','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Updated Icon for Utility -->
-              <i
-                class="bx bx-wrench text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <!-- Wrench icon for utility -->
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Utility
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownUtility" class="hidden pl-4 space-y-2 mt-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Content for Utility
-            </li>
-          </ul>
-        </li>
-
-        <!-- Products -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownProducts','dropdownMaster','dropdownStock','dropdownPurchase','dropdownBuyerOrder','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownReport','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Using 'i' for icon with white color -->
-              <i
-                class="bx bx-package text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <!-- Icon color set to white -->
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Products
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownProducts" class="hidden pl-4 mt-2 space-y-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Carpet Type
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Quality
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Colour
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Shade Colour
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Shape
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Size
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Design
-            </li>
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              BOM (Bill Of Material)
-            </li>
-          </ul>
-        </li>
-
-        <!-- Report -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownReport','dropdownBuyerOrder','dropdownMaster','dropdownProducts','dropdownStock','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownCustomers','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Report Icon (Using Boxicons) -->
-              <i
-                class="bx bx-line-chart text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Report
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownReport" class="hidden pl-4 space-y-2 mt-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Content for Report
-            </li>
-          </ul>
-        </li>
-
-        <!-- Customers -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownCustomers','dropdownBuyerOrder','dropdownMaster','dropdownProducts','dropdownStock','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownReport','dropdownSystemUser')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- Customers Icon (Using Boxicons) -->
-              <i
-                class="bx bx-group text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                Customers
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownCustomers" class="hidden pl-4 space-y-2 mt-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Content for Customers
-            </li>
-          </ul>
-        </li>
-
-        <!-- System User -->
-        <li class="relative group">
-          <a
-            href="#"
-            onclick="toggleDropdown('dropdownSystemUser','dropdownBuyerOrder','dropdownMaster','dropdownProducts','dropdownStock','dropdownSpinning','dropdownDyeing','dropdownArtwork','dropdownContractor','dropdownFinishing','dropdownPacking','dropdownUtility','dropdownReport','dropdownCustomers')"
-            class="w-full text-left py-2 pl-3 rounded-l-full transition-all duration-300 ease-in-out flex justify-between items-center group-hover:bg-white group-hover:text-gray-900 group-hover:shadow-md group-hover:shadow-yellow-200"
-          >
-            <div class="flex items-center">
-              <!-- System User Icon (Using Boxicons) -->
-              <i
-                class="bx bx-user text-white text-xl mr-3 group-hover:text-gray-900"
-              ></i>
-              <p
-                class="ml-3 links_name text-white text-sm font-medium group-hover:text-gray-900"
-              >
-                System User
-              </p>
-            </div>
-          </a>
-
-          <!-- Dropdown Content -->
-          <ul id="dropdownSystemUser" class="hidden pl-4 space-y-2 mt-2">
-            <li class="p-0.5 text-white hover:text-yellow-300 cursor-pointer">
-              Content for System User
-            </li>
-          </ul>
-        </li>
-
-        <!-- Add more menu items here -->
-      </ul>
+      <section
+        id="main-content"
+        class="home-section bg-gradient-to-r from-sky-200 to-blue-500 min-h-screen pl-3 p-2 transition-all duration-300 ease-in-out"
+      ></section>
     </div>
 
-    <!-- Navbar section -->
-    <nav
-      class="navBar sticky rounded-md top-0 ml-20 w-full bg-blue-600 h-14 border-2 border-yellow-100"
-    >
-      <!-- Hamburger Button (Initially visible) -->
-      <button
-        id="hamburger"
-        class="p-2 text-white rounded-md top-4 left-4 hover:text-gray-400"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
-      </button>
-    </nav>
-
-    <!-- Main content section -->
-
-    <section
-      id="main-content"
-      class="home-section bg-gradient-to-r from-sky-200 to-yellow-100 min-h-screen pl-3 p-2 transition: margin-left 0.3s ease-in-out;"
-    >
-      <div class="container mx-auto">
-        <!-- Section 1: Buyer Orders -->
-        <div id="buyer-orders-section" class="chart-section">
-          <div class="flex-1 p-2">
-            <h2
-              class="text-2xl font-bold text-sky-700 border-b border-gray-300 pb-2 mt-2"
-            >
-              Buyer Orders 🛍️
-            </h2>
-            <div
-              class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6 mb-6 pb-6 pl-6 pr-6"
-            >
-              <!-- Card 1 -->
-              <div
-                class="bg-white p-6 rounded-lg shadow hover:bg-gray-100 hover:text-blue-500"
-              >
-                <div class="flex justify-between">
-                  <p class="text-4xl sm:text-2xl text-green-500">18</p>
-                  <p class="text-3xl sm:text-2xl">🛒</p>
-                </div>
-                <p class="text-gray-500 mt-4 text-sm sm:text-xs text-center">
-                  Total Orders
-                </p>
-              </div>
-              <!-- Card 2 -->
-
-              <div
-                class="bg-white p-6 rounded-lg shadow hover:bg-gray-100 hover:text-blue-500"
-              >
-                <div class="flex justify-between">
-                  <p class="text-4xl sm:text-2xl text-blue-500">1</p>
-                  <p class="text-3xl sm:text-2xl">📦</p>
-                </div>
-                <p class="text-gray-500 mt-4 text-sm sm:text-xs text-center">
-                  Total Dispatched
-                </p>
-              </div>
-              <!-- Card 3 -->
-              <div
-                class="bg-white p-6 rounded-lg shadow hover:bg-gray-100 hover:text-blue-500"
-              >
-                <div class="flex justify-between">
-                  <p class="text-4xl sm:text-2xl text-purple-500">18</p>
-                  <p class="text-3xl sm:text-2xl">⏳</p>
-                </div>
-                <p class="text-gray-500 mt-4 text-sm sm:text-xs text-center">
-                  Total Pending
-                </p>
-              </div>
-              <!-- Card 4 -->
-              <div
-                class="bg-white p-6 rounded-lg shadow hover:bg-gray-100 hover:text-blue-500"
-              >
-                <div class="flex justify-between">
-                  <p class="text-4xl sm:text-2xl text-red-500">10</p>
-                  <p class="text-3xl sm:text-2xl">🚨</p>
-                </div>
-                <p class="text-gray-500 mt-4 text-sm sm:text-xs text-center">
-                  Total Delayed POs
-                </p>
-              </div>
-            </div>
-          </div>
-          <canvas id="buyerOrdersChart"></canvas>
-        </div>
-
-        <!-- Section 2: Purchase Indents -->
-        <div id="purchase-indents-section" class="chart-section">
-          <div class="flex-1 p-2">
-            <h2
-              class="ttext-2xl font-bold text-green-500 border-b border-gray-300 pb-2 mt-2"
-            >
-              Purchase Indents 📝
-            </h2>
-            <div
-              class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6 mb-6 pb-6 pl-6 pr-6"
-            >
-              <!-- Card 1 -->
-              <div
-                class="bg-white p-6 rounded-lg shadow hover:bg-gray-100 hover:text-blue-500"
-              >
-                <div class="flex justify-between">
-                  <p class="text-4xl sm:text-2xl text-green-500">7</p>
-                  <p class="text-3xl sm:text-2xl">📄</p>
-                </div>
-                <p class="text-gray-500 mt-4 text-sm sm:text-xs text-center">
-                  Total Indents
-                </p>
-              </div>
-              <!-- Card 2 -->
-              <div
-                class="bg-white p-6 rounded-lg shadow hover:bg-gray-100 hover:text-blue-500"
-              >
-                <div class="flex justify-between">
-                  <p class="text-4xl sm:text-2xl text-green-500">6</p>
-                  <p class="text-3xl sm:text-2xl">✅</p>
-                </div>
-                <p class="text-gray-500 mt-4 text-sm sm:text-xs text-center">
-                  Total Indents Received
-                </p>
-              </div>
-              <!-- Card 3 -->
-              <div
-                class="bg-white p-6 rounded-lg shadow hover:bg-gray-100 hover:text-blue-500"
-              >
-                <div class="flex justify-between">
-                  <p class="text-4xl sm:text-2xl text-green-500">2</p>
-                  <p class="text-3xl sm:text-2xl">⏳</p>
-                </div>
-                <p class="text-gray-500 mt-4 text-sm sm:text-xs text-center">
-                  Total Indents Pending
-                </p>
-              </div>
-              <!-- Card 4 -->
-              <div
-                class="bg-white p-6 rounded-lg shadow hover:bg-gray-100 hover:text-blue-500"
-              >
-                <div class="flex justify-between">
-                  <p class="text-4xl sm:text-2xl text-green-500">2</p>
-                  <p class="text-3xl sm:text-2xl">❌</p>
-                </div>
-                <p class="text-gray-500 mt-4 text-sm sm:text-xs text-center">
-                  Without Indent Received
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <canvas id="purchaseIndentsChart"></canvas>
-        </div>
-
-        <!-- Section 3: Other Issues -->
-        <div id="other-issues-section" class="chart-section">
-          <div class="flex-1 p-6">
-            <h2
-              class="text-2xl font-bold text-red-600 border-b border-gray-300 pb-2 mt-2"
-            >
-              Other Issues ⚠️
-            </h2>
-            <div
-              class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6 mb-6 pb-6 pl-6 pr-6"
-            >
-              <!-- Card 1 -->
-              <div
-                class="bg-white p-6 rounded-lg shadow hover:bg-gray-100 hover:text-blue-500"
-              >
-                <div class="flex justify-between">
-                  <p class="text-4xl sm:text-2xl text-purple-500">811</p>
-                  <p class="text-3xl sm:text-2xl">🧵</p>
-                </div>
-                <p class="text-gray-500 mt-4 text-sm sm:text-xs text-center">
-                  Total Weaving Delays
-                </p>
-              </div>
-              <!-- Card 2 -->
-              <div
-                class="bg-white p-6 rounded-lg shadow hover:bg-gray-100 hover:text-blue-500"
-              >
-                <div class="flex justify-between">
-                  <p class="text-4xl sm:text-2xl text-purple-500">3</p>
-                  <p class="text-3xl sm:text-2xl">🎨</p>
-                </div>
-                <p class="text-gray-500 mt-4 text-sm sm:text-xs text-center">
-                  Total Dyeing Delays
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <canvas id="otherIssuesChart"></canvas>
-        </div>
-      </div>
-    </section>
-
-    <script src="script.js"></script>
+    <script type="module" src="src/login/login.js" defer></script>
+    <script type="module" src="src/main.js" defer></script>
   </body>
 </html>
